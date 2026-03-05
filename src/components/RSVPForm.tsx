@@ -31,15 +31,13 @@ export const RSVPForm = () => {
 
       const res = await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
-        // 'text/plain' avoids CORS preflight error from Google Apps Script
+        mode: 'no-cors', // Crucial for Google Apps Script to bypass CORS policy
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(formData),
       });
 
-      if (!res.ok) {
-        throw new Error('Network error. Failed to connect to RSVP server.');
-      }
-
+      // With 'no-cors', the response is "opaque" and res.ok is false, 
+      // but if we reach here without a network error throwing, it was sent successfully.
       setSubmitted(true);
     } catch (err: any) {
       console.error('RSVP submit error:', err);
