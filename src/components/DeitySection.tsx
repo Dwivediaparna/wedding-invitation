@@ -8,7 +8,7 @@ const DeityImage = ({ src, alt, fallbackText }: { src: string; alt: string; fall
         <img
           src={src}
           alt={alt}
-          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+          className="w-full h-full object-cover"
           onError={() => setError(true)}
         />
       ) : (
@@ -21,163 +21,130 @@ const DeityImage = ({ src, alt, fallbackText }: { src: string; alt: string; fall
   );
 };
 
-// SVG Royal Arch that sits behind each deity
-const RoyalArch = ({ size = 'small' }: { size?: 'large' | 'small' }) => {
-  const isLarge = size === 'large';
-  return (
-    <div className={`absolute ${isLarge ? '-inset-6 md:-inset-10' : '-inset-4 md:-inset-6'} pointer-events-none`}>
-      <svg viewBox="0 0 200 220" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <linearGradient id={`archGrad-${size}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#7f1d1d" />
-            <stop offset="50%" stopColor="#991b1b" />
-            <stop offset="100%" stopColor="#7f1d1d" />
-          </linearGradient>
-          <linearGradient id={`archGold-${size}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#fbbf24" />
-            <stop offset="50%" stopColor="#f59e0b" />
-            <stop offset="100%" stopColor="#d97706" />
-          </linearGradient>
-        </defs>
-        {/* Outer arch */}
-        <path d="M20 220 L20 80 Q20 10 100 10 Q180 10 180 80 L180 220" fill="none" stroke={`url(#archGrad-${size})`} strokeWidth={isLarge ? '6' : '4'} />
-        {/* Inner arch */}
-        <path d="M35 220 L35 85 Q35 25 100 25 Q165 25 165 85 L165 220" fill="none" stroke={`url(#archGold-${size})`} strokeWidth={isLarge ? '3' : '2'} />
-        {/* Crown / Kalash at top */}
-        <path d="M85 12 Q100 -5 115 12" fill="none" stroke="#fbbf24" strokeWidth="2" />
-        <circle cx="100" cy="2" r="4" fill="#DC2626" stroke="#fbbf24" strokeWidth="1.5" />
-        {/* Decorative dots along arch */}
-        <circle cx="55" cy="45" r="2" fill="#fbbf24" opacity="0.5" />
-        <circle cx="145" cy="45" r="2" fill="#fbbf24" opacity="0.5" />
-        <circle cx="40" cy="70" r="1.5" fill="#fbbf24" opacity="0.4" />
-        <circle cx="160" cy="70" r="1.5" fill="#fbbf24" opacity="0.4" />
-        {/* Side pillars base */}
-        <rect x="15" y="200" width="12" height="20" rx="2" fill={`url(#archGrad-${size})`} opacity="0.6" />
-        <rect x="173" y="200" width="12" height="20" rx="2" fill={`url(#archGrad-${size})`} opacity="0.6" />
-        {/* Pillar capitals */}
-        <rect x="12" y="195" width="18" height="6" rx="2" fill="#fbbf24" opacity="0.4" />
-        <rect x="170" y="195" width="18" height="6" rx="2" fill="#fbbf24" opacity="0.4" />
-        {/* Hanging bell ornaments */}
-        <line x1="60" y1="38" x2="60" y2="52" stroke="#fbbf24" strokeWidth="0.8" opacity="0.5" />
-        <circle cx="60" cy="54" r="2.5" fill="#fbbf24" opacity="0.3" />
-        <line x1="140" y1="38" x2="140" y2="52" stroke="#fbbf24" strokeWidth="0.8" opacity="0.5" />
-        <circle cx="140" cy="54" r="2.5" fill="#fbbf24" opacity="0.3" />
-      </svg>
-    </div>
-  );
-};
-
-// Diya / Lamp SVG
-const Diya = ({ className = '' }: { className?: string }) => (
-  <div className={`w-8 h-10 md:w-10 md:h-12 ${className}`} style={{ animation: 'float 3s ease-in-out infinite' }}>
-    <svg viewBox="0 0 40 50" className="w-full h-full">
-      {/* Flame */}
-      <path d="M20 5 Q15 15 17 22 Q20 28 23 22 Q25 15 20 5" fill="#FF6B00" opacity="0.9">
-        <animate attributeName="d" dur="1.5s" repeatCount="indefinite" values="
-          M20 5 Q15 15 17 22 Q20 28 23 22 Q25 15 20 5;
-          M20 3 Q14 14 16 22 Q20 29 24 22 Q26 14 20 3;
-          M20 5 Q15 15 17 22 Q20 28 23 22 Q25 15 20 5" />
-      </path>
-      <path d="M20 8 Q17 16 18 21 Q20 25 22 21 Q23 16 20 8" fill="#FFD700" opacity="0.8">
-        <animate attributeName="d" dur="1.2s" repeatCount="indefinite" values="
-          M20 8 Q17 16 18 21 Q20 25 22 21 Q23 16 20 8;
-          M20 6 Q16 15 17 21 Q20 26 23 21 Q24 15 20 6;
-          M20 8 Q17 16 18 21 Q20 25 22 21 Q23 16 20 8" />
-      </path>
-      {/* Glow */}
-      <circle cx="20" cy="15" r="8" fill="#FFD700" opacity="0.15">
-        <animate attributeName="r" dur="2s" repeatCount="indefinite" values="6;10;6" />
-        <animate attributeName="opacity" dur="2s" repeatCount="indefinite" values="0.1;0.2;0.1" />
+/* ─── Animated Diya (Oil Lamp) ─── */
+const Diya = () => (
+  <div className="w-7 h-9 md:w-9 md:h-11 flex-shrink-0" style={{ animation: 'float 3s ease-in-out infinite' }}>
+    <svg viewBox="0 0 36 48" className="w-full h-full">
+      <defs>
+        <radialGradient id="flameGlow" cx="50%" cy="40%">
+          <stop offset="0%" stopColor="#FFD700" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="#FFD700" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <circle cx="18" cy="14" r="10" fill="url(#flameGlow)">
+        <animate attributeName="r" dur="1.5s" repeatCount="indefinite" values="8;12;8" />
       </circle>
-      {/* Lamp base */}
-      <ellipse cx="20" cy="30" rx="10" ry="4" fill="#b91c1c" />
-      <path d="M10 30 L12 40 Q20 44 28 40 L30 30" fill="#991b1b" />
-      <ellipse cx="20" cy="40" rx="8" ry="3" fill="#7f1d1d" />
-      {/* Wick */}
-      <line x1="20" y1="22" x2="20" y2="30" stroke="#333" strokeWidth="1" />
+      <path d="M18 4 Q14 12 15 20 Q18 24 21 20 Q22 12 18 4" fill="#FF6B00" opacity="0.9">
+        <animate attributeName="d" dur="0.8s" repeatCount="indefinite" values="M18 4 Q14 12 15 20 Q18 24 21 20 Q22 12 18 4; M18 2 Q13 11 14 20 Q18 25 22 20 Q23 11 18 2; M18 4 Q14 12 15 20 Q18 24 21 20 Q22 12 18 4" />
+      </path>
+      <path d="M18 8 Q16 14 16.5 19 Q18 22 19.5 19 Q20 14 18 8" fill="#FFD700" opacity="0.85" />
+      <line x1="18" y1="20" x2="18" y2="28" stroke="#555" strokeWidth="0.8" />
+      <ellipse cx="18" cy="30" rx="9" ry="3.5" fill="#b91c1c" />
+      <path d="M9 30 L11 40 Q18 43 25 40 L27 30" fill="#991b1b" />
+      <ellipse cx="18" cy="40" rx="7" ry="2.5" fill="#7f1d1d" />
     </svg>
   </div>
 );
 
 export const DeitySection = () => {
   return (
-    <div className="w-full mb-6 relative z-20">
-      {/* Royal Header Banner */}
-      <div className="flex items-center justify-center gap-2 mb-6">
-        <div className="h-px flex-1 max-w-16 bg-gradient-to-r from-transparent to-red-800/40"></div>
-        <span className="text-xs text-red-800/60 font-hindi">॥ श्री ॥</span>
-        <div className="h-px flex-1 max-w-16 bg-gradient-to-l from-transparent to-red-800/40"></div>
+    <div className="w-full mb-4 relative z-20">
+      {/* ─── Top Banner: !! Shri !! ─── */}
+      <div className="flex items-center justify-center gap-3 mb-5">
+        <div className="h-[1.5px] w-14 md:w-20 bg-gradient-to-r from-transparent to-red-800/40"></div>
+        <span className="text-sm md:text-base text-red-800 font-hindi font-bold tracking-wider opacity-70">॥ श्री ॥</span>
+        <div className="h-[1.5px] w-14 md:w-20 bg-gradient-to-l from-transparent to-red-800/40"></div>
       </div>
 
-      {/* Deity Shrine Layout */}
-      <div className="flex justify-center items-end gap-3 md:gap-8 relative px-4">
-        {/* Left Diya */}
-        <Diya className="self-center mb-8 md:mb-10" />
+      {/* ─── Row 1: Ganeshji — Large, prominent, center ─── */}
+      <div className="flex flex-col items-center mb-5">
+        <div className="relative group">
+          {/* Outer glow ring */}
+          <div className="absolute -inset-3 md:-inset-4 rounded-full bg-gradient-to-br from-yellow-400/20 via-red-600/10 to-yellow-400/20 blur-sm animate-pulse-slow"></div>
 
-        {/* Sitaram — Left */}
-        <div className="flex flex-col items-center group relative">
-          <RoyalArch size="small" />
+          {/* Gold-crimson gradient frame */}
           <div
-            className="w-20 h-20 md:w-28 md:h-28 rounded-full shadow-xl overflow-hidden relative z-10 animate-glow-pulse"
-            style={{ padding: '3px', background: 'linear-gradient(135deg, #fbbf24, #b91c1c, #fbbf24)' }}
-          >
-            <div className="w-full h-full rounded-full overflow-hidden">
-              <DeityImage src="/sitaram.png" alt="Sitaram" fallbackText="Sita Ram" />
-            </div>
-          </div>
-          <span className="text-red-900 font-bold text-xs md:text-sm mt-2 font-hindi drop-shadow-sm z-10">सीताराम</span>
-        </div>
-
-        {/* Ganesha — Center & Elevated */}
-        <div className="flex flex-col items-center relative -mt-6 md:-mt-8">
-          <RoyalArch size="large" />
-          <div
-            className="w-28 h-28 md:w-40 md:h-40 rounded-full shadow-2xl overflow-hidden relative z-10 group animate-glow-pulse"
+            className="w-32 h-32 md:w-44 md:h-44 rounded-full shadow-2xl overflow-hidden relative z-10"
             style={{
-              padding: '4px',
-              background: 'linear-gradient(135deg, #fbbf24, #DC2626, #7f1d1d, #fbbf24)',
-              animationDelay: '0.5s',
+              padding: '5px',
+              background: 'conic-gradient(from 0deg, #fbbf24, #DC2626, #7f1d1d, #DC2626, #fbbf24)',
             }}
           >
-            <div className="w-full h-full rounded-full overflow-hidden bg-yellow-50">
+            <div className="w-full h-full rounded-full overflow-hidden bg-yellow-50 shadow-inner">
               <DeityImage src="/ganeshji.png" alt="Ganesha" fallbackText="Ganesha" />
             </div>
           </div>
-          {/* Ganesha Label — premium badge */}
-          <div className="relative z-10 mt-2">
-            <div className="absolute inset-0 bg-yellow-300/30 blur-md rounded-full"></div>
-            <span className="relative text-red-900 font-bold text-sm md:text-base font-heading drop-shadow-md bg-gradient-to-r from-yellow-200/90 via-yellow-100/95 to-yellow-200/90 px-5 py-1.5 rounded-full border border-red-800/20 shadow-md">
-              ॥ श्री गणेशाय नमः ॥
-            </span>
-          </div>
         </div>
 
-        {/* Radha Krishna — Right */}
-        <div className="flex flex-col items-center group relative">
-          <RoyalArch size="small" />
-          <div
-            className="w-20 h-20 md:w-28 md:h-28 rounded-full shadow-xl overflow-hidden relative z-10 animate-glow-pulse"
-            style={{ padding: '3px', background: 'linear-gradient(135deg, #fbbf24, #b91c1c, #fbbf24)', animationDelay: '1s' }}
+        {/* Label */}
+        <div className="relative mt-3 z-10">
+          <div className="absolute inset-0 bg-yellow-400/25 blur-md rounded-full"></div>
+          <span
+            className="relative font-heading text-red-900 font-bold text-sm md:text-lg px-6 py-1.5 rounded-full bg-gradient-to-r from-yellow-200/80 via-yellow-100/90 to-yellow-200/80 shadow-md drop-shadow-sm"
+            style={{ border: '1.5px solid rgba(127,29,29,0.2)' }}
           >
-            <div className="w-full h-full rounded-full overflow-hidden">
+            ॥ श्री गणेशाय नमः ॥
+          </span>
+        </div>
+      </div>
+
+      {/* ─── Row 2: Sitaram + Diyas + Radha Krishna ─── */}
+      <div className="flex items-center justify-center gap-4 md:gap-10">
+        {/* Left Diya */}
+        <Diya />
+
+        {/* Sitaram */}
+        <div className="flex flex-col items-center group">
+          <div
+            className="w-20 h-20 md:w-28 md:h-28 rounded-full shadow-xl overflow-hidden relative"
+            style={{
+              padding: '3px',
+              background: 'conic-gradient(from 90deg, #fbbf24, #b91c1c, #fbbf24)',
+            }}
+          >
+            <div className="w-full h-full rounded-full overflow-hidden bg-yellow-50">
+              <DeityImage src="/sitaram.png" alt="Sitaram" fallbackText="Sita Ram" />
+            </div>
+          </div>
+          <span className="text-red-900 font-bold text-xs md:text-sm mt-2 font-hindi drop-shadow-sm">सीताराम</span>
+        </div>
+
+        {/* Center ornament between the two */}
+        <div className="flex flex-col items-center gap-1 opacity-60">
+          <svg viewBox="0 0 20 40" className="w-4 h-8 md:w-5 md:h-10 text-red-800">
+            <path d="M10 0 L10 40" stroke="currentColor" strokeWidth="0.8" strokeDasharray="2 3" />
+            <circle cx="10" cy="20" r="3" fill="#F59E0B" opacity="0.6" />
+          </svg>
+        </div>
+
+        {/* Radha Krishna */}
+        <div className="flex flex-col items-center group">
+          <div
+            className="w-20 h-20 md:w-28 md:h-28 rounded-full shadow-xl overflow-hidden relative"
+            style={{
+              padding: '3px',
+              background: 'conic-gradient(from 270deg, #fbbf24, #b91c1c, #fbbf24)',
+            }}
+          >
+            <div className="w-full h-full rounded-full overflow-hidden bg-yellow-50">
               <DeityImage src="/radhakrishna.png" alt="Radha Krishna" fallbackText="Radha Krishna" />
             </div>
           </div>
-          <span className="text-red-900 font-bold text-xs md:text-sm mt-2 font-hindi drop-shadow-sm z-10">राधा कृष्ण</span>
+          <span className="text-red-900 font-bold text-xs md:text-sm mt-2 font-hindi drop-shadow-sm">राधा कृष्ण</span>
         </div>
 
         {/* Right Diya */}
-        <Diya className="self-center mb-8 md:mb-10" />
+        <Diya />
       </div>
 
-      {/* Decorative base line under deities */}
-      <div className="flex items-center justify-center mt-4 gap-2">
-        <div className="h-[2px] w-12 md:w-20 bg-gradient-to-r from-transparent to-red-800/30"></div>
-        <svg viewBox="0 0 40 12" className="w-10 h-3 text-red-800">
-          <path d="M0 6 Q10 0 20 6 Q30 12 40 6" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
-          <circle cx="20" cy="6" r="2" fill="#F59E0B" opacity="0.6" />
+      {/* ─── Bottom decorative wave ─── */}
+      <div className="flex items-center justify-center mt-5 gap-1">
+        <div className="h-[1.5px] w-10 md:w-16 bg-gradient-to-r from-transparent to-red-800/30"></div>
+        <svg viewBox="0 0 60 14" className="w-14 h-3.5 md:w-16 md:h-4 text-red-800">
+          <path d="M0 7 Q10 0 20 7 Q30 14 40 7 Q50 0 60 7" fill="none" stroke="currentColor" strokeWidth="1.2" opacity="0.35" />
+          <circle cx="30" cy="7" r="2.5" fill="#F59E0B" opacity="0.5" />
         </svg>
-        <div className="h-[2px] w-12 md:w-20 bg-gradient-to-l from-transparent to-red-800/30"></div>
+        <div className="h-[1.5px] w-10 md:w-16 bg-gradient-to-l from-transparent to-red-800/30"></div>
       </div>
     </div>
   );
