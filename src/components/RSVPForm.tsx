@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { Send, CheckCircle, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
+// =========================================================================
+// ⚠️ REPLACE THIS URL WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL
+// Follow the instructions in the guide to get this URL.
+// =========================================================================
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxTGDL8j_BvFgoQ2syr28K14CJaBa8VaAoYklglph7hUVWT23yuO6XAqyNK3xuwVx22mg/exec';
+
 export const RSVPForm = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -19,15 +25,19 @@ export const RSVPForm = () => {
     setError('');
 
     try {
-      const res = await fetch('/api/rsvp', {
+      if (!GOOGLE_SCRIPT_URL) {
+        throw new Error('RSVP system is not connected yet. Please add your Google Script URL.');
+      }
+
+      const res = await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        // 'text/plain' avoids CORS preflight error from Google Apps Script
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(formData),
       });
 
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || 'Failed to submit RSVP');
+        throw new Error('Network error. Failed to connect to RSVP server.');
       }
 
       setSubmitted(true);
