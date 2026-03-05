@@ -99,8 +99,8 @@ const DeityFrame = ({
           {isLarge && <div className="absolute inset-0 bg-yellow-400/15 blur-md rounded-full" />}
           <span
             className={`relative font-hindi text-red-900 font-bold drop-shadow-sm ${isLarge
-                ? 'text-xs md:text-sm px-4 md:px-5 py-1 md:py-1.5 rounded-full bg-gradient-to-r from-yellow-200/70 via-yellow-100/80 to-yellow-200/70 shadow-md font-heading'
-                : 'text-[10px] md:text-xs mt-0.5'
+              ? 'text-xs md:text-sm px-4 md:px-5 py-1 md:py-1.5 rounded-full bg-gradient-to-r from-yellow-200/70 via-yellow-100/80 to-yellow-200/70 shadow-md font-heading'
+              : 'text-[10px] md:text-xs mt-0.5'
               }`}
             style={isLarge ? { border: '1px solid rgba(107,16,16,0.15)' } : {}}
           >
@@ -113,6 +113,7 @@ const DeityFrame = ({
 };
 
 export const DeitySection = () => {
+  const base = import.meta.env.BASE_URL;
   return (
     <div className="w-full mb-3 relative z-20">
       {/* ── Top banner ── */}
@@ -127,13 +128,13 @@ export const DeitySection = () => {
         {/* LEFT: Sitaram + Diya */}
         <div className="flex flex-col items-center gap-1.5">
           <Diya side="left" />
-          <DeityFrame src="/sitaram.png" alt="Sitaram" fallbackText="Sita Ram" label="सीताराम" />
+          <DeityFrame src={`${base}sitaram.png`} alt="Sitaram" fallbackText="Sita Ram" label="सीताराम" />
         </div>
 
         {/* CENTER: Ganesha — prominent */}
         <div className="flex flex-col items-center -mt-1">
           <DeityFrame
-            src="/ganeshji.png"
+            src={`${base}ganeshji.png`}
             alt="Ganesha"
             fallbackText="Ganesha"
             size="large"
@@ -144,7 +145,7 @@ export const DeitySection = () => {
         {/* RIGHT: Radha Krishna + Diya */}
         <div className="flex flex-col items-center gap-1.5">
           <Diya side="right" />
-          <DeityFrame src="/radhakrishna.png" alt="Radha Krishna" fallbackText="Radha Krishna" label="राधा कृष्ण" />
+          <DeityFrame src={`${base}radhakrishna.png`} alt="Radha Krishna" fallbackText="Radha Krishna" label="राधा कृष्ण" />
         </div>
       </div>
 
