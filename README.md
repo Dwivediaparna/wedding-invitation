@@ -70,7 +70,7 @@ This repo is pre-configured for GitHub Pages deployment via GitHub Actions.
 2. Go to **Settings → Pages → Source** → select **GitHub Actions**
 3. Push to `main` — the workflow auto-builds and deploys
 
-Live URL: `https://<your-username>.github.io/hindu-wedding-invitation/`
+Live URL: `https://<your-username>.github.io/wedding-invitation/`
 
 > ⚠️ **Note:** GitHub Pages only serves static files. The RSVP form won't save data on GitHub Pages. For full RSVP functionality, deploy the Express server separately (see below).
 
