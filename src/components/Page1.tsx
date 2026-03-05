@@ -356,7 +356,7 @@ export const Page1 = () => {
           <OrnamentalDivider />
           <div className="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-2.5 mt-3">
             <FamilyCard title="दर्शनाभिलाषी" icon={<PrayerIcon />} names={['श्रीमती रश्मिअजय कु. शुक्ल', 'श्रीमती आभासतीशचंद्र तिवारी']} />
-            <FamilyCard title="आभार" icon={<PrayerIcon />} names={['श्रीमती विद्यावती', 'इंद्रमणि शुक्ल']} />
+            <FamilyCard title="आभार" icon={<PrayerIcon />} names={['श्रीमती विद्यावतीइंद्रमणि शुक्ल']} />
             <FamilyCard title="स्वागताकांक्षी" icon={<FlowerIcon />} names={['डॉ. शिवांगी मिश्रा', 'अनंत भारद्वाज']} />
             <FamilyCard title="विनीत" icon={<PinIcon />} names={['डॉ. संध्या द्विवेदी', 'डॉ आशीष द्विवेदी', 'बलीपुर, जगापुर,', 'कुण्डा,', 'प्रतापगढ़ ।', '230204-', 'Ward No:-04', 'नगरपंचायत', 'हीरागंज प्रतापगढ़।']} />
             <FamilyCard title="स्नेहाकांक्षी" icon={<HeartIcon />} names={['अरुंधती भारद्वाज', 'आश्रय शुक्ल', 'अस्मिता शुक्ला', 'अभिजात सरारि', 'आराध्या द्विवेदी', 'कृति तिवारी', 'आदित्य शुक्ल', 'अनन्य तिवारी', 'अंशुमन द्विवेदी']} />
